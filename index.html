@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sam's Japan Recommendations for Adam</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+  :root {
+    --bg: #f8f6f2;
+    --card: #ffffff;
+    --accent: #b8363b;
+    --accent2: #2c3e50;
+    --text: #1a1a1a;
+    --muted: #7f8c8d;
+    --border: #e8e4df;
+    --tag-bg: #f0ebe4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 70px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1400&q=60') center/cover;
+    opacity: 0.18;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+  .hero .subtitle {
+    font-size: 1.15em;
+    opacity: 0.75;
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .hero .byline {
+    font-size: 0.88em;
+    opacity: 0.5;
+    font-style: italic;
+  }
+  .hero .stats {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .hero .stat { text-align: center; }
+  .hero .stat-num { font-size: 2.2em; font-weight: 700; display: block; }
+  .hero .stat-label { font-size: 0.78em; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.12em; }
+
+  /* === NAV === */
+  .nav {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav a {
+    padding: 14px 22px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.88em;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav a:hover { color: var(--text); }
+  .nav a.active { border-bottom-color: var(--accent); color: var(--accent); }
+
+  /* === FILTERS === */
+  .filters {
+    max-width: 960px;
+    margin: 20px auto 0;
+    padding: 0 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label { font-size: 0.78em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 4px; }
+  .filter-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: white;
+    font-size: 0.82em;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text);
+    font-family: inherit;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* === CONTENT === */
+  .content { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* === REGION === */
+  .region { margin-top: 56px; }
+  .region-hero {
+    width: 100%;
+    height: 200px;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .region-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .region-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 40%, rgba(0,0,0,0.6));
+    display: flex;
+    align-items: flex-end;
+    padding: 20px 24px;
+  }
+  .region-hero-overlay h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2em;
+    color: white;
+    font-weight: 700;
+  }
+  .region-summary {
+    color: var(--muted);
+    font-size: 0.95em;
+    margin-bottom: 28px;
+    max-width: 740px;
+    line-height: 1.75;
+  }
+
+  /* === NEIGHBORHOOD === */
+  .neighborhood { margin-bottom: 36px; }
+  .neighborhood-header {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 4px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .neighborhood-header::after { content: ' \25BE'; font-size: 0.7em; opacity: 0.35; }
+  .neighborhood-header.collapsed::after { content: ' \25B8'; }
+  .neighborhood-desc { font-size: 0.85em; color: var(--muted); margin-bottom: 14px; font-style: italic; }
+
+  /* === PLACE CARD === */
+  .place {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+  }
+  .place:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    transform: translateY(-1px);
+  }
+  .place-img {
+    width: 140px;
+    min-height: 100px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .place-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .place-img .fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4em;
+    background: linear-gradient(135deg, #f5f0ea, #e8e2d8);
+  }
+  .place-body { padding: 14px 18px; flex: 1; min-width: 0; }
+  .place-name {
+    font-size: 1.02em;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .place-name a { color: inherit; text-decoration: none; }
+  .place-name a:hover { color: var(--accent); }
+  .place-desc {
+    font-size: 0.88em;
+    color: #555;
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+  .place-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .place-tag {
+    font-size: 0.72em;
+    padding: 2px 10px;
+    background: var(--tag-bg);
+    border-radius: 10px;
+    color: var(--muted);
+  }
+  .place-link {
+    font-size: 0.76em;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .place-link:hover { text-decoration: underline; }
+
+  .collapsible-content.collapsed { display: none; }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--muted);
+    font-size: 0.83em;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 2em; }
+    .place { flex-direction: column; }
+    .place-img { width: 100%; height: 160px; }
+    .nav a { padding: 12px 14px; font-size: 0.82em; }
+    .region-hero { height: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Sam's Japan Picks</h1>
+    <p class="subtitle">Recommendations for Adam</p>
+    <p class="byline">Places to eat, drink, explore & experience across Japan</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num">49</span><span class="stat-label">Tokyo</span></div>
+      <div class="stat"><span class="stat-num">14</span><span class="stat-label">Kyoto</span></div>
+      <div class="stat"><span class="stat-num">1</span><span class="stat-label">Mt Fuji</span></div>
+      <div class="stat"><span class="stat-num">9</span><span class="stat-label">Beyond</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#tokyo" class="active" onclick="navClick(this)">🏙 Tokyo</a>
+    <a href="#kyoto" onclick="navClick(this)">⛩ Kyoto</a>
+    <a href="#fuji" onclick="navClick(this)">🗻 Mt Fuji</a>
+    <a href="#beyond" onclick="navClick(this)">🌊 Beyond</a>
+  </div>
+</div>
+
+<div class="filters">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" onclick="filterPlaces('all', this)">All</button>
+  <button class="filter-btn" onclick="filterPlaces('food', this)">🍜 Food & Drink</button>
+  <button class="filter-btn" onclick="filterPlaces('culture', this)">🎌 Culture & Sights</button>
+  <button class="filter-btn" onclick="filterPlaces('outdoors', this)">🌳 Outdoors</button>
+</div>
+
+<div class="content">
+
+<!-- ==================== TOKYO ==================== -->
+<div class="region" id="tokyo">
+  <div class="region-hero">
+    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=960&q=70" alt="Tokyo skyline" onerror="this.parentElement.style.display='none'">
+    <div class="region-hero-overlay"><h2>🏙 Tokyo</h2></div>
+  </div>
+  <p class="region-summary">A sprawling neon metropolis where ancient temples sit next to robot restaurants, and every neighborhood has its own distinct personality. From the fashion-forward streets of Harajuku to the tiny six-seat izakayas of Golden Gai, Tokyo rewards wandering.</p>
+
+  <!-- Shibuya / Daikanyama / Nakameguro -->
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Shibuya, Daikanyama & Nakameguro</h3>
+    <p class="neighborhood-desc">The youthful, creative heart of Tokyo — street fashion, vinyl shops, riverside strolls, and hidden cocktail bars.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCpTHmgY6fc1fD-GmdPPUF-CriXJbClYDt3g&s" alt="Church bar" onerror="this.parentElement.innerHTML='<div class=fallback>🍸</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Dogenzaka%20Church%20-The%20Church-%2C%20Tokyo" target="_blank">Dogenzaka Church -The Church-</a></div>
+          <p class="place-desc">An atmospheric bar housed in a converted church space in Shibuya's lively Dogenzaka nightlife district. Stained glass and candlelight make for an unforgettable cocktail experience.</p>
+          <div class="place-meta"><span class="place-tag">Bar</span><span class="place-tag">Shibuya</span><a class="place-link" href="https://www.google.com/maps/search/Dogenzaka%20Church%20-The%20Church-%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerU5dahVaFpasNZj6bPj0ARwjJFqhBYWpAeEgtE7o7IKumwi7BXyFaHGfcSgMPPcZpVIbGgBAILJpoQCWujbIe_GbY7GajuG0lrR7N9ArBu1ruIG4nc9tA_HubEfE6oCu8zI0_660HFO7E=w400-h300-k-no" alt="Coffee" onerror="this.parentElement.innerHTML='<div class=fallback>☕</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/5%20CROSSTIES%20COFFEE%20%E6%B8%8B%E8%B0%B7%E3%82%B9%E3%82%AF%E3%83%A9%E3%83%B3%E3%83%96%E3%83%AB%E3%82%B9%E3%82%AF%E3%82%A8%E3%82%A2%2C%20Tokyo" target="_blank">5 CROSSTIES COFFEE</a></div>
+          <p class="place-desc">High-floor cafe in Shibuya Scramble Square. Great coffee with a bird's-eye view of the famous crossing below.</p>
+          <div class="place-meta"><span class="place-tag">Cafe</span><span class="place-tag">Shibuya</span><a class="place-link" href="https://www.google.com/maps/search/5%20CROSSTIES%20COFFEE%20%E6%B8%8B%E8%B0%B7%E3%82%B9%E3%82%AF%E3%83%A9%E3%83%B3%E3%83%96%E3%83%AB%E3%82%B9%E3%82%AF%E3%82%A8%E3%82%A2%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepUDnIYHVnzjdoozeK1DUexH4eWV3L9FNyM79JbRHiMLlcN_BP-ekF9Nr-z8GOYwO45qdUbF7MxW30FR3REfFcZvQTXmiVZa38cEiWAcgd4JxlyTIRZpArlVpfkzmXqsYEnXkCxHw=w400-h300-k-no" alt="Cherry blossoms river" onerror="this.parentElement.innerHTML='<div class=fallback>🌸</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Meguro%20River%20Cherry%20Blossoms%20Promenade%2C%20Tokyo" target="_blank">Meguro River Cherry Blossoms</a></div>
+          <p class="place-desc">One of Tokyo's most beloved hanami spots. 800+ cherry trees bloom over the river in late March/early April, lit by paper lanterns at night. Stunning from the riverside cafes.</p>
+          <div class="place-meta"><span class="place-tag">Scenic Walk</span><span class="place-tag">Nakameguro</span><a class="place-link" href="https://www.google.com/maps/search/Meguro%20River%20Cherry%20Blossoms%20Promenade%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipM69RzahwkAxidOZTbP0vUWI2GlV0n4gwPMhqBl=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍸</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Fauvism%20Cocktail%20%26%20Spirits%20bar%20%E4%B8%AD%E7%9B%AE%E9%BB%92%20%E3%83%90%E3%83%BC%2C%20Tokyo%2C%20Japan" target="_blank">Fauvism Cocktail & Spirits Bar</a></div>
+          <p class="place-desc">Intimate cocktail bar in the Nakameguro neighborhood. Artfully crafted drinks in a cozy, dimly-lit space along the Meguro River area.</p>
+          <div class="place-meta"><span class="place-tag">Cocktail Bar</span><span class="place-tag">Nakameguro</span><a class="place-link" href="https://www.google.com/maps/search/Fauvism%20Cocktail%20%26%20Spirits%20bar%20%E4%B8%AD%E7%9B%AE%E9%BB%92%20%E3%83%90%E3%83%BC%2C%20Tokyo%2C%20Japan" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwer0M-mttc1Pk7eRgAiZ_NZ652O1zBDIAmi8r1MSK7rcxAZqsdT05plBHPbKykmznxaqk_2LOHqJN2qKI5ItPj8FSRBj4ldL_w5_FC09tlHEAQzN34dCVeiGmTngQsoOQ-ALA5fw=w400-h300-k-no" alt="Shimokitazawa" onerror="this.parentElement.innerHTML='<div class=fallback>🎸</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Shimokitazawa%2C%20Tokyo" target="_blank">Shimokitazawa</a></div>
+          <p class="place-desc">Tokyo's bohemian neighborhood — a maze of vintage shops, indie theaters, cozy cafes and thrift stores. The anti-Shibuya, with a relaxed village-like vibe.</p>
+          <div class="place-meta"><span class="place-tag">Neighborhood</span><a class="place-link" href="https://www.google.com/maps/search/Shimokitazawa%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqmmhvHExMQb-gMaWX9TGdyM-ScUoLoScTKG6vE2xIBguCO165La2ZKZB1vpMuGCTR1JdoxzaCscfVFsPc9qs17XjKaD45ASUjjnNdPK3Eo4xaTIOpXoxzqMKQ2uxO3bQUUUseMyHP4pxRL=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🥩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Kobeyakinikukanteki%20Shibuya%20HANARE%20Ten%2C%20Tokyo" target="_blank">Kobeyakiniku Kanteki Shibuya HANARE</a></div>
+          <p class="place-desc">Premium Kobe beef yakiniku restaurant in Shibuya. Exceptional quality wagyu cuts grilled at your table.</p>
+          <div class="place-meta"><span class="place-tag">Yakiniku</span><span class="place-tag">Shibuya</span><a class="place-link" href="https://www.google.com/maps/search/Kobeyakinikukanteki%20Shibuya%20HANARE%20Ten%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerGIYdlYp-DPonOAPLxakGjnA2EgBUU1DW1DBxvojp-mBwmIds7l8hFHMo28vnS7hwS4cw5ZV1WSlXqdGe2fe8aYRRhbUVjHc0a18ynsPjviSraKwNjl9MbmZPIeLPKmqZ7UbJ1vhRC_5M3=w400-h300-k-no" alt="Tonkatsu" onerror="this.parentElement.innerHTML='<div class=fallback>🍱</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Tonkatsu%20Maisen%20Shibuya%20Hikarie%2C%20Tokyo" target="_blank">Tonkatsu Maisen</a></div>
+          <p class="place-desc">Legendary tonkatsu chain known for their kurobuta pork cutlet. The Shibuya Hikarie branch is convenient and consistently excellent.</p>
+          <div class="place-meta"><span class="place-tag">Tonkatsu</span><span class="place-tag">Shibuya</span><a class="place-link" href="https://www.google.com/maps/search/Tonkatsu%20Maisen%20Shibuya%20Hikarie%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweooF_YQ7LNkps0amoaFUKCWpUpBvGzuvXCOOy2dqNnn6PMwoJ7_2fW-2PW1KuTV7EvnnOAPix1ZM4azGsRRM54UPTikXHdmGXllRxoAJqU56JVuRZbBWUUYLNBcgJXev7Gur9pSFA=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍣</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Uoshin%20Shibuya%2C%20Tokyo" target="_blank">Uoshin Shibuya</a></div>
+          <p class="place-desc">Popular standing sushi bar known for incredibly fresh fish at reasonable prices. Expect a line, but it moves fast.</p>
+          <div class="place-meta"><span class="place-tag">Sushi</span><span class="place-tag">Shibuya</span><a class="place-link" href="https://www.google.com/maps/search/Uoshin%20Shibuya%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerE3obwpsLiGAqXehXtevA6m_1JLp2DhahVMKDk_8qjPmF9BeJultSfCqQPJY550VzKBzS4JBlQIvvx-iNHMRb9-a-Z0KCyaJ8U8VO4u9UYG-kGNnYvEU79dhgOsn2EnlZOqYx_mqg5QYJl=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>📚</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Mandarake%20Shibuya%2C%20Tokyo" target="_blank">Mandarake Shibuya</a></div>
+          <p class="place-desc">Multi-floor otaku paradise — manga, anime goods, vintage toys, and cosplay gear. One of Japan's largest second-hand anime chains.</p>
+          <div class="place-meta"><span class="place-tag">Anime Shop</span><span class="place-tag">Shibuya</span><a class="place-link" href="https://www.google.com/maps/search/Mandarake%20Shibuya%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerZN-ncXnX-fJmJaLjJb2rS4vbJccv1MUBFkiNgv4TF7ek05g_BfRWUm3LAtwmTwXBqklCSKh4Va2Gj84bREkcEkA3t2qOpIjMKmFKxoI3jcV3HCi2LQhIEUR5u8Hm21gj-bbGxFQ=w400-h300-k-no" alt="Japanese garden" onerror="this.parentElement.innerHTML='<div class=fallback>🏡</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Kyu%20Asakura%20House%2C%20Tokyo" target="_blank">Kyu Asakura House</a></div>
+          <p class="place-desc">Beautifully preserved 1919 Japanese house with traditional gardens in Daikanyama. A serene escape just steps from trendy shopping streets.</p>
+          <div class="place-meta"><span class="place-tag">Historic House</span><span class="place-tag">Daikanyama</span><a class="place-link" href="https://www.google.com/maps/search/Kyu%20Asakura%20House%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoxl6uKIrhnHaEW0CBePATDD7kBYjF3F7CDZ93h1ti_Mw_O9_r4dub711a5_P-APSjAgbOaTZeTJsCC5S4X6L-wbgD5IHIDyCPg1d6uSnW_pb2PYi_3kV--3pqWkNJ_eZSMa_Ti=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🏙</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Yebisu%20Garden%20Place%20Tower%2C%20Tokyo" target="_blank">Yebisu Garden Place Tower</a></div>
+          <p class="place-desc">Free city views from the 38th floor, plus the Yebisu Beer Museum and Tokyo Photographic Art Museum at ground level.</p>
+          <div class="place-meta"><span class="place-tag">Viewpoint</span><span class="place-tag">Ebisu</span><a class="place-link" href="https://www.google.com/maps/search/Yebisu%20Garden%20Place%20Tower%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Harajuku / Omotesando / Aoyama -->
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Harajuku, Omotesando & Aoyama</h3>
+    <p class="neighborhood-desc">Where Takeshita Street's kawaii chaos meets Omotesando's tree-lined luxury. Fashion, architecture, and people-watching.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipOLG_k1CRalLR_mzoakZgINzic-V2Ui6HgbGl1k=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🥂</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/THE%20BELCOMO%2C%20THE%20AOYAMA%20GRAND%20HOTEL%2C%20Tokyo" target="_blank">THE BELCOMO — Aoyama Grand Hotel</a></div>
+          <p class="place-desc">Stylish hotel restaurant and bar in Aoyama. Chic interiors with a sophisticated menu, perfect for a refined evening out.</p>
+          <div class="place-meta"><span class="place-tag">Restaurant & Bar</span><span class="place-tag">Aoyama</span><a class="place-link" href="https://www.google.com/maps/search/THE%20BELCOMO%2C%20THE%20AOYAMA%20GRAND%20HOTEL%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerj3K79wwAjBIYp3PNYAJKKXlxd3siYV6D_5LhkNu2QQhkBa7CP7GSj5IDpUnOjXmoJwXVvsSTA1VyMJt6NbtD8uCKaLJ6n4g_1Df4rqhpKrfZ34TO8Mz103y4_R5CywaqfLLDR=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>👕</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/%23FR2%20HARAJUKU%2C%20Tokyo" target="_blank">#FR2 HARAJUKU</a></div>
+          <p class="place-desc">Trendy streetwear flagship with bold graphic tees and the iconic rabbit logo. A must for Japanese street fashion fans.</p>
+          <div class="place-meta"><span class="place-tag">Fashion</span><span class="place-tag">Harajuku</span><a class="place-link" href="https://www.google.com/maps/search/%23FR2%20HARAJUKU%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=300&q=60" alt="Micro pig" onerror="this.parentElement.innerHTML='<div class=fallback>🐷</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/mipig%20cafe%20harajuku%2C%20Tokyo" target="_blank">mipig cafe Harajuku</a></div>
+          <p class="place-desc">Micro-pig cafe where you cuddle tiny pigs while sipping drinks. Book in advance — incredibly popular and utterly charming.</p>
+          <div class="place-meta"><span class="place-tag">Animal Cafe</span><span class="place-tag">Harajuku</span><a class="place-link" href="https://www.google.com/maps/search/mipig%20cafe%20harajuku%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+        </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo1_1AkqYPTV-yXQs6ktxcaGrRP1anDp4quYbRL6X_OJDqqLGDI6Qf45u2EMtMf1p8LFR-Chi4d4V_IOWjaNelHIYqRSh-BERqbgeb5PDGdh-BQ4mwl4M3yPl0ef7xeHYwxB1YYyA=w400-h300-k-no" alt="Yoyogi park" onerror="this.parentElement.innerHTML='<div class=fallback>🌳</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Yoyogi%20Park%2C%20Tokyo" target="_blank">Yoyogi Park</a></div>
+          <p class="place-desc">Vast green oasis in the heart of the city. Weekend street performers, cosplayers, and picnicking locals. Right next to Meiji Shrine.</p>
+          <div class="place-meta"><span class="place-tag">Park</span><span class="place-tag">Harajuku</span><a class="place-link" href="https://www.google.com/maps/search/Yoyogi%20Park%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepHszpqLo20EopPPrVnakJHev1Nm7TFgQacOif0HOKgiBcD24-JdJtIlWnRX04TwRoK_7kpYTBQJ3MlrHNfk8tC2Ekb2PpxkYlTIKPBziPA7vFFdIetM5lD9Gyx1_suGmAM3KxRGA=w400-h300-k-no" alt="Meiji Shrine" onerror="this.parentElement.innerHTML='<div class=fallback>⛩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Meiji%20Jingu%2C%20Tokyo" target="_blank">Meiji Jingu (Meiji Shrine)</a></div>
+          <p class="place-desc">Tokyo's most famous Shinto shrine, surrounded by a lush forested park. Walk through the towering torii gate and feel the city melt away.</p>
+          <div class="place-meta"><span class="place-tag">Shrine</span><span class="place-tag">Harajuku</span><a class="place-link" href="https://www.google.com/maps/search/Meiji%20Jingu%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweomkLK2WRKITmkDVWeT3JVdsZX3-TrLA8Mnb3A4k_21UrRhMQQnJbvSQ1xWlF4CzKqS--iFsCFknrBgGrmaLvB6kop5SPdcMyvTrY6jbeNtDdNROTWnUHJGTYYOLXqP_g3WW24-=w400-h300-k-no" alt="Japanese museum" onerror="this.parentElement.innerHTML='<div class=fallback>🏛</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Nezu%20Museum%2C%20Tokyo" target="_blank">Nezu Museum</a></div>
+          <p class="place-desc">Kengo Kuma-designed museum of pre-modern Japanese art, with an exquisite bamboo-lined garden. The architecture alone is worth the visit.</p>
+          <div class="place-meta"><span class="place-tag">Museum</span><span class="place-tag">Omotesando</span><a class="place-link" href="https://www.google.com/maps/search/Nezu%20Museum%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Roppongi -->
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Roppongi & Akasaka</h3>
+    <p class="neighborhood-desc">Art museums by day, skyline views by night. Home to some of Tokyo's best museums and international dining.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepiXryMTMDha0z0JJS9gSMW3vxNZPVqe9pYQCBWMMHDMLnRqlnDCufw3jVQARQwBnfT9OD7llQ4m4fHQV6ySJPOsJuesWTbCIxWlXl6V79HoJAL2Txq1xBoaJuzFfNZrOCbcFz1=w400-h300-k-no" alt="Digital art" onerror="this.parentElement.innerHTML='<div class=fallback>✨</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/teamLab%20Borderless%3A%20MORI%20Building%20DIGITAL%20ART%20MUSEUM%2C%20Tokyo" target="_blank">teamLab Borderless</a></div>
+          <p class="place-desc">Immersive digital art museum — a mind-bending labyrinth of light, color, and interaction unlike anything else in the world. Book tickets well in advance.</p>
+          <div class="place-meta"><span class="place-tag">Digital Art</span><span class="place-tag">Azabudai Hills</span><a class="place-link" href="https://www.google.com/maps/search/teamLab%20Borderless%3A%20MORI%20Building%20DIGITAL%20ART%20MUSEUM%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo8yw-RWzS-5myklK16XouZsEodGfNsZEvuCsTgCIeWa14gtW14ieQzxBw8tjUh85CyJxVEJ_cMJGeoufwvGZnivz3JKgOoohaLsfWxUuwY2aTzi7yuRkWKFZ7PuoGIr5M25adt=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍽</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Suju%20Dining%20Rokkaku%20Tokyo%20Midtown%2C%20Tokyo" target="_blank">Suju Dining Rokkaku</a></div>
+          <p class="place-desc">Stylish vegetable-forward Japanese restaurant in Tokyo Midtown. Beautiful plating in a sleek modern setting.</p>
+          <div class="place-meta"><span class="place-tag">Japanese</span><span class="place-tag">Roppongi</span><a class="place-link" href="https://www.google.com/maps/search/Suju%20Dining%20Rokkaku%20Tokyo%20Midtown%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipNV3QjhQlu05OUN_crSjh9OX7GgVzx36099mfy2=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🏨</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/remm%20Roppongi%2C%20Tokyo" target="_blank">remm Roppongi</a></div>
+          <p class="place-desc">Sleep-focused hotel right in Roppongi with massage chairs in every room. Great base for the nightlife and art museum district.</p>
+          <div class="place-meta"><span class="place-tag">Hotel</span><span class="place-tag">Roppongi</span><a class="place-link" href="https://www.google.com/maps/search/remm%20Roppongi%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepsk4irfWth7wOWdiKXo2cT8O427I7LtYGbKNRkKn07un82BSQVo11TZ4hIi1T6INybmyQtdsmHDp-hmL9l9sLZ6CHA7irXGf6VqexNFzp6Y83XejAKc9mX62bk0OjzaJEKSNiM=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🎨</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Mori%20Art%20Museum%2C%20Tokyo" target="_blank">Mori Art Museum</a></div>
+          <p class="place-desc">Contemporary art on the 53rd floor of Roppongi Hills. World-class rotating exhibits plus a panoramic observation deck.</p>
+          <div class="place-meta"><span class="place-tag">Art Museum</span><span class="place-tag">Roppongi Hills</span><a class="place-link" href="https://www.google.com/maps/search/Mori%20Art%20Museum%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepIFHydgs33rr6VhRoX_eK7MGZodAHw1dr8D3VHcZOoSuGEdKW_LMb8-bKRFBFYmlEtHA3enAnhmdscDu_oM-mIvXsDZWOPPLp4pHM8bfcX3X59ampV_rL4yHMAZTcLkBsd9TtcPA=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🏗</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/TOTO%20GALLERY%20%C2%B7%20MA%2C%20Tokyo" target="_blank">TOTO GALLERY MA</a></div>
+          <p class="place-desc">Exceptional free architecture gallery near Nogizaka Station. Japanese and international architectural design — a hidden gem for design lovers.</p>
+          <div class="place-meta"><span class="place-tag">Architecture Gallery</span><span class="place-tag">Nogizaka</span><a class="place-link" href="https://www.google.com/maps/search/TOTO%20GALLERY%20%C2%B7%20MA%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerY3v3_QkjaTE6v6yV9ibxQQGQgY6B-QYga_Kcc25eBcLPtLe5kF3Z0XtVnlMLO6SupHl3oY7a06dmYyhH3MoYQK6bckXOi3lJTEvDkfZY4OTxYag2k7MbeFkwbU7oQCLFiuUdb=w400-h300-k-no" alt="Wagyu" onerror="this.parentElement.innerHTML='<div class=fallback>🥩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Yoroniku%2C%20Tokyo" target="_blank">Yoroniku</a></div>
+          <p class="place-desc">One of Tokyo's most acclaimed yakiniku restaurants, famous for "silk roast" wagyu. Reservations extremely hard to get — plan well in advance.</p>
+          <div class="place-meta"><span class="place-tag">Yakiniku</span><span class="place-tag">Minami-Aoyama</span><a class="place-link" href="https://www.google.com/maps/search/Yoroniku%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoSt4an66572xPt5O7f55x3Hd6A0zDK9pHsYNZi2UMB-dGUGlwa0QLRQTXESzVV1a9Q3qHuupede6YztCRuSXZo6mKY1W3xWbg2TYvhiCpaw2BW5QT1uz055lJeYjrBBPi-lUyIXRG0YdQ=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🐟</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Nihonbashi%20Kaisen%20Donburi%20Tsujihan%20Tokyo%20Midtown%2C%20Tokyo" target="_blank">Tsujihan — Tokyo Midtown</a></div>
+          <p class="place-desc">Famous "zeitaku-don" — a towering bowl of fresh sashimi over rice, finished with dashi broth. Always worth the wait.</p>
+          <div class="place-meta"><span class="place-tag">Seafood Bowl</span><span class="place-tag">Tokyo Midtown</span><a class="place-link" href="https://www.google.com/maps/search/Nihonbashi%20Kaisen%20Donburi%20Tsujihan%20Tokyo%20Midtown%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nihonbashi / Ginza / Tsukiji -->
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Nihonbashi, Ginza & Tsukiji</h3>
+    <p class="neighborhood-desc">Old-meets-new Tokyo. Historic merchant quarters, the legendary fish market, and the city's finest traditional dining.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipOYU-k401oOrlet4xcXiMPAJF8YjpWdt4v1NQKe=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍶</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Nihonbashi%20Suminoe%2C%20Tokyo" target="_blank">Nihonbashi Suminoe</a></div>
+          <p class="place-desc">Traditional Japanese restaurant in the historic Nihonbashi district. A taste of old Edo Tokyo in the shadow of modern skyscrapers.</p>
+          <div class="place-meta"><span class="place-tag">Japanese</span><span class="place-tag">Nihonbashi</span><a class="place-link" href="https://www.google.com/maps/search/Nihonbashi%20Suminoe%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqQeoohsWMAICnWEEJ_h4dsM0blXvNvMB_3VchX9MawVgrjLJBv_tQZyNN6CXOyjghc3bXPwwcWNVRJ0eKWzKuUotxTCSXpruuzcuK21V1zu7CgM-nXYVES7Kmki6TyHS6rELE=w400-h300-k-no" alt="Sashimi bowl" onerror="this.parentElement.innerHTML='<div class=fallback>🐟</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Nihonbashi%20Kaisen%20Don%20Tsujihan%20-%20Muromachi%20Branch%2C%20Tokyo" target="_blank">Tsujihan — Muromachi (Original)</a></div>
+          <p class="place-desc">The original Tsujihan. Their signature kaisen-don is legendary — the broth-pouring finale is an experience unto itself. Be prepared to queue.</p>
+          <div class="place-meta"><span class="place-tag">Seafood Bowl</span><span class="place-tag">Nihonbashi</span><a class="place-link" href="https://www.google.com/maps/search/Nihonbashi%20Kaisen%20Don%20Tsujihan%20-%20Muromachi%20Branch%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerwKbBIl-pOamxbRKH7FfJM0CXZFAff8z5OhCgpiKrn0pd8909o64RcirAZ5wwbuPl1X_5ulkfvYXpuRxXpsTCHbs75ABYAPQi2V1TRJoPfw8KQ_b1bBbGULeZ2hkoIMGthK2Tl=w400-h300-k-no" alt="Tsukiji market" onerror="this.parentElement.innerHTML='<div class=fallback>🐙</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Tsukiji%20Outer%20Market%2C%20Tokyo" target="_blank">Tsukiji Outer Market</a></div>
+          <p class="place-desc">Fresh sushi, tamagoyaki, wagyu skewers, and every seafood imaginable. Best visited early morning when the stalls are lively and the fish is freshest.</p>
+          <div class="place-meta"><span class="place-tag">Food Market</span><span class="place-tag">Tsukiji</span><a class="place-link" href="https://www.google.com/maps/search/Tsukiji%20Outer%20Market%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><div class="fallback">🍣</div></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Sushizanmai%2C%20Tokyo" target="_blank">Sushizanmai</a></div>
+          <p class="place-desc">24-hour sushi chain famous for tuna auctions. Quality sushi at reasonable prices, with the freshest fish near Tsukiji.</p>
+          <div class="place-meta"><span class="place-tag">Sushi</span><span class="place-tag">Tsukiji</span><a class="place-link" href="https://www.google.com/maps/search/Sushizanmai%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+        </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&q=60" alt="Tempura" onerror="this.parentElement.innerHTML='<div class=fallback>🍤</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Tempura%20Ginza%20Ten-ichi%2C%20Tokyo" target="_blank">Tempura Ginza Ten-ichi</a></div>
+          <p class="place-desc">Iconic tempura restaurant since 1930. Counter dining where master chefs fry each piece to perfection and serve it directly to you.</p>
+          <div class="place-meta"><span class="place-tag">Tempura</span><span class="place-tag">Ginza</span><a class="place-link" href="https://www.google.com/maps/search/Tempura%20Ginza%20Ten-ichi%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+        </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqolAZmhI2ct01-gYd3Tc-OxUyeAQECpQ2LM0dB82gha8qan_4I-3yqmVNE71v3J6Cpq2ri6XzUgxCvS5xzYMDoI9gxMsl863mm3P-lgmumibT172DKLDsdBSOXrlYhnSgqYYHXjGS0end_=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍤</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Tempura%20Fukamachi%2C%20Tokyo" target="_blank">Tempura Fukamachi</a></div>
+          <p class="place-desc">Michelin-starred tempura with light, delicate batter and seasonal ingredients. A sublime lunch counter in Kyobashi.</p>
+          <div class="place-meta"><span class="place-tag">Tempura</span><span class="place-tag">Kyobashi</span><a class="place-link" href="https://www.google.com/maps/search/Tempura%20Fukamachi%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipNMAS5lNmI0KTR3uCiyAJFeMpaG5Vxgc5C0eebs=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍵</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Ippuku%2C%20Tokyo" target="_blank">Ippuku</a></div>
+          <p class="place-desc">Small, charming spot near Ginza serving carefully prepared Japanese dishes in an intimate setting.</p>
+          <div class="place-meta"><span class="place-tag">Japanese</span><span class="place-tag">Ginza</span><a class="place-link" href="https://www.google.com/maps/search/Ippuku%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shinjuku -->
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Shinjuku</h3>
+    <p class="neighborhood-desc">Neon-soaked energy. The busiest station in the world, towering skyscrapers, and the legendary maze of tiny bars.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweowk6cHrPiRFKOPySjTv-1XFovkpCJYMtCka4LmfTNK3jzX7v3Zcrql3U-Ykm5-k-glPYc6_GPDmtsiJ6FiVOnshUFK3Wn792hLSDoGx-O1wq4erDDd53Wx92OAOrMR3jOEisuP=w400-h300-k-no" alt="Golden Gai" onerror="this.parentElement.innerHTML='<div class=fallback>🏮</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Shinjuku%20Golden%20Gai%2C%20Tokyo" target="_blank">Shinjuku Golden Gai</a></div>
+          <p class="place-desc">200+ tiny bars in six narrow alleys. Each seats 6-10 people with its own theme — jazz, horror, punk. A bucket-list Tokyo experience.</p>
+          <div class="place-meta"><span class="place-tag">Bar District</span><span class="place-tag">Kabukicho</span><a class="place-link" href="https://www.google.com/maps/search/Shinjuku%20Golden%20Gai%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerxoPmHA2FxhrLs6RhkCX_BMfildseBQp_NX3tMWMfVRGCLt9UGSrpWwMjMbmav7H-pAFNw_GkOKX6i3hSbszUdgqwmktsrq1KNGiQTAijK94OyFxR7yFAc7tOs3CtrZMH41WZj=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🌆</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Tokyo%20Metropolitan%20Government%20Building%2C%20Tokyo" target="_blank">Tokyo Metropolitan Government Building</a></div>
+          <p class="place-desc">Free observation deck on the 45th floor with sweeping views. On clear days you can see Mt Fuji. Best free viewpoint in Tokyo.</p>
+          <div class="place-meta"><span class="place-tag">Free Viewpoint</span><span class="place-tag">Nishi-Shinjuku</span><a class="place-link" href="https://www.google.com/maps/search/Tokyo%20Metropolitan%20Government%20Building%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ueno / Asakusa -->
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Ueno & Asakusa</h3>
+    <p class="neighborhood-desc">Old-town Tokyo. Ancient temples, traditional shopping streets, and world-class museums with shitamachi character.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepDTBjUjHEu12aIANkIv1aHtfb3drfGWl0HEZ7A5Z23_rpERdXF0KAH8oIy7mu7cCIgoEmEjQn9Vctolz2VVUwZNhehjxTLX5cRiw_v8Pnn8Cic6b8GvM69FcQu01H5173Os9rc=w400-h300-k-no" alt="Sensoji temple" onerror="this.parentElement.innerHTML='<div class=fallback>⛩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Sens%C5%8D-ji%2C%20Tokyo" target="_blank">Sensoji</a></div>
+          <p class="place-desc">Tokyo's oldest temple (645 AD). Enter through the iconic Kaminarimon "Thunder Gate" and browse the Nakamise shopping street. Magical when lit at night.</p>
+          <div class="place-meta"><span class="place-tag">Temple</span><span class="place-tag">Asakusa</span><a class="place-link" href="https://www.google.com/maps/search/Sens%C5%8D-ji%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo5W7M3ELuloG6K9hJUtaxOVH9WLhWFRzHu6W-amLn--tj8S0S4uqcTCZHsFEalXP6jtBlwXVQ2Acj-sFuhxnO8GU72bO7nWwZK1FzAXOaLgHCUmTNAT2Eo0P-4zqIlBfqMg58D=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🏛</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Tokyo%20National%20Museum%2C%20Tokyo" target="_blank">Tokyo National Museum</a></div>
+          <p class="place-desc">Japan's oldest and largest museum — 110,000+ works spanning samurai armor, ukiyo-e prints, Buddhist sculpture and ceramics. In Ueno Park.</p>
+          <div class="place-meta"><span class="place-tag">Museum</span><span class="place-tag">Ueno</span><a class="place-link" href="https://www.google.com/maps/search/Tokyo%20National%20Museum%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwequvKvvl4oISXeKkw5i2LtJ4GtAtuQDXXqzH2DE_0NKnhHYZ8JF2TSUSErmjPreiWhyjMbPceK9zRqalOfR-qYKiA05KZcaDGr_6zI8-qLx18rMSD5qSu1RtLu76-AOmnUz_jz-Qt6vpbE1=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🧮</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/%E5%B1%B1%E6%9C%AC%E3%81%9D%E3%82%8D%E3%81%B0%E3%82%93%E5%BA%97%2C%20Tokyo" target="_blank">Yamamoto Soroban-ten</a></div>
+          <p class="place-desc">Traditional abacus shop near Asakusa. One of the few remaining soroban specialists — a charming window into vanishing craftsmanship.</p>
+          <div class="place-meta"><span class="place-tag">Traditional Shop</span><span class="place-tag">Asakusa</span><a class="place-link" href="https://www.google.com/maps/search/%E5%B1%B1%E6%9C%AC%E3%81%9D%E3%82%8D%E3%81%B0%E3%82%93%E5%BA%97%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Other Tokyo neighborhoods -->
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">More Around Tokyo</h3>
+    <p class="neighborhood-desc">Day trips and far-flung neighborhoods worth the journey.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipOwpI_LJan9hoFmUoJeEGzmv-ZBQnUboArsjLLZ=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🥩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/%E6%96%B0%E6%9D%B1%E4%BA%AC%E7%84%BC%E8%82%89%20%E9%81%8A%E5%BF%83%20%E6%B5%9C%E7%94%BA%E6%9C%AC%E5%BA%97%2C%20Tokyo" target="_blank">Shin Tokyo Yakiniku Yushin</a></div>
+          <p class="place-desc">Local yakiniku in the Hamacho neighborhood. Quality grilled meats in a neighborhood setting, away from the tourist crowds.</p>
+          <div class="place-meta"><span class="place-tag">Yakiniku</span><span class="place-tag">Hamacho</span><a class="place-link" href="https://www.google.com/maps/search/%E6%96%B0%E6%9D%B1%E4%BA%AC%E7%84%BC%E8%82%89%20%E9%81%8A%E5%BF%83%20%E6%B5%9C%E7%94%BA%E6%9C%AC%E5%BA%97%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR5inHk1tz3TAZQMeOyrRN8xgTKkpTbxEa4g&s" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍺</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/%E7%AC%91%E9%85%94%2C%20Tokyo" target="_blank">Shosui (笑酔)</a></div>
+          <p class="place-desc">Cozy Hamacho pub — grilled skewers, small plates, and cold beer in a welcoming local atmosphere.</p>
+          <div class="place-meta"><span class="place-tag">Izakaya</span><span class="place-tag">Hamacho</span><a class="place-link" href="https://www.google.com/maps/search/%E7%AC%91%E9%85%94%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepAmV_rnfCHasGdoL2tlfeWxtPi3R0z76FiDva7ArkpJpmoPmNuUvUHx2tg4LsCsXflbTChcFbaAfp9NzKuYEqTHOa35icBxF6e1EKd2ekd30YfqjtClGiBk5fw2c8ohPcGM3F9=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍝</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Osteria%20Il%20Pozzo%2C%20Tokyo" target="_blank">Osteria Il Pozzo</a></div>
+          <p class="place-desc">Charming Italian osteria in east Tokyo. Japan does Italian food remarkably well — rustic flavors in a quiet neighborhood.</p>
+          <div class="place-meta"><span class="place-tag">Italian</span><span class="place-tag">Kuramae</span><a class="place-link" href="https://www.google.com/maps/search/Osteria%20Il%20Pozzo%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo9YP7W3DO-HDCbZven9CJT6iW-sTVuzwqXfBe9PnM0xh3G1NwCx2moNENR_BKOWYlExH2N3I6HamDSXbm0aihlvHdoS3DAUeHKJwr52wk9LeIpd-0Tfnqx5LSSggRforaMpzOTcijqj-T2=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>📚</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/animate%20Ikebukuro%20main%20store%2C%20Tokyo" target="_blank">Animate Ikebukuro</a></div>
+          <p class="place-desc">World's largest anime goods store. Nine floors of manga, figurines, cosplay supplies — the flagship temple of pop culture.</p>
+          <div class="place-meta"><span class="place-tag">Anime Shop</span><span class="place-tag">Ikebukuro</span><a class="place-link" href="https://www.google.com/maps/search/animate%20Ikebukuro%20main%20store%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqabfjAoB3PxaTLWiWzxq5tDwhXqditzgW4E5BembztumUZ-l-vaBptrSUH3o50TWUf-vUorSZ-WjDn93HdXHHq29n8YCqpDylJh5SiJDEkK0NYSQ3mfjvs4owndxX6qDvWOU87iRwLXzk4=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>📦</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Mandarake%20Complex%2C%20Tokyo" target="_blank">Mandarake Complex — Akihabara</a></div>
+          <p class="place-desc">Eight floors of vintage manga, rare collectibles, retro games, and cosplay gear. Treasure-hunting paradise in Akihabara.</p>
+          <div class="place-meta"><span class="place-tag">Anime & Manga</span><span class="place-tag">Akihabara</span><a class="place-link" href="https://www.google.com/maps/search/Mandarake%20Complex%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerWM-fVniCvzk415Z1bcVPwszWYstUEQK7ytYBh4FAnPSNSvpzJT8FzsPUdoHrMnrpcTmMRdgQglhUGwN2P0HxyrEZmAAaRjuAsr6_HiHmET3TmgLO-CtUBSc8SORpRybaW87Ws=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🌸</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Kudanzaka%20Park%2C%20Tokyo" target="_blank">Kudanzaka Park</a></div>
+          <p class="place-desc">Peaceful hilltop park near the Imperial Palace, known for cherry blossoms in spring with views over the Chidorigafuchi moat.</p>
+          <div class="place-meta"><span class="place-tag">Park</span><span class="place-tag">Chiyoda</span><a class="place-link" href="https://www.google.com/maps/search/Kudanzaka%20Park%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoaWveG0ZJ0MH7GiGqsB6rG98Ag3WSNFC4innYzC0fBexalHHaIkUlF1Uf-UNtXXDRTx7dG5JvIUKAbsCQPrLLBN7ZsNka-B70qvT_J-l5b4JOGc6wSA8Z0lZWAraTyvaBOcMj_=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🗼</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Zojo-ji%2C%20Tokyo" target="_blank">Zojo-ji Temple</a></div>
+          <p class="place-desc">Grand Buddhist temple at the foot of Tokyo Tower. The ancient gate framing the red-and-white tower is one of Tokyo's most iconic views.</p>
+          <div class="place-meta"><span class="place-tag">Temple</span><span class="place-tag">Minato</span><a class="place-link" href="https://www.google.com/maps/search/Zojo-ji%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweq8ddZyMN37fXASddi51D6YWEu9AYD-eZqOdk5Floe2FPNf5tz3zwqZdgnNrAQxzTkS70knEnWYuy6NDgwQE-ffzVarN7fEeG9pxbsFWw_AtjcOsjW-7Afb-Fv27UkU0guyB5EXLw=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🏘</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Edo-Tokyo%20Open%20Air%20Architectural%20Museum%2C%20Tokyo" target="_blank">Edo-Tokyo Open Air Architectural Museum</a></div>
+          <p class="place-desc">Rescued historical buildings from Edo to Showa. Said to have inspired Miyazaki's Spirited Away. Like walking through a time machine.</p>
+          <div class="place-meta"><span class="place-tag">Museum</span><span class="place-tag">Koganei (30 min west)</span><a class="place-link" href="https://www.google.com/maps/search/Edo-Tokyo%20Open%20Air%20Architectural%20Museum%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwer7qMqJO6f4YYFzpe_mLiUQYpQet2jLKFe27z8w9WvH8Le72W7no3FSAk9jqyKRVwDQv3NhbkwKOEoEiGy_I4s55PaBkjZCleM_ItLnlaHWNd3p63_pLWwnuzNRPa7c1LRfLbTQLw=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🎷</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Jazz%20BIGBOY%2C%20Tokyo" target="_blank">Jazz BIGBOY</a></div>
+          <p class="place-desc">Jazz bar in south Tokyo with live performances. Tokyo's jazz scene is legendary — intimate venues like this are where the magic happens.</p>
+          <div class="place-meta"><span class="place-tag">Jazz Bar</span><span class="place-tag">Ota</span><a class="place-link" href="https://www.google.com/maps/search/Jazz%20BIGBOY%2C%20Tokyo" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerO9tiyJUJcWgm_aX2mkgrcRD5JznDXUB0ltgS8i7V8QbN8-Gyvt7xNuEcQ-u9R823KbzwVlnr4KkSAfrxjJGJrxOTqMPnBGEiu-V3YXG6Rh9Qqm-Zh9nQPTuD_pZRp4npjEP23rw=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🏰</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Blue%20Bayou%20Restaurant%2C%20Urayasu%2C%20Chiba%20Prefecture" target="_blank">Blue Bayou Restaurant (Tokyo Disneyland)</a></div>
+          <p class="place-desc">Dine by candlelight inside Pirates of the Caribbean as boats float by. An experience unique to the park.</p>
+          <div class="place-meta"><span class="place-tag">Theme Park Dining</span><span class="place-tag">Urayasu</span><a class="place-link" href="https://www.google.com/maps/search/Blue%20Bayou%20Restaurant%2C%20Urayasu%2C%20Chiba%20Prefecture" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== KYOTO ==================== -->
+<div class="region" id="kyoto">
+  <div class="region-hero">
+    <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=960&q=70" alt="Kyoto temple" onerror="this.parentElement.style.display='none'">
+    <div class="region-hero-overlay"><h2>⛩ Kyoto</h2></div>
+  </div>
+  <p class="region-summary">Japan's cultural heart. Over a thousand temples, geisha districts, bamboo groves, and tea houses nestled in misty mountains. Walk the ancient streets of Higashiyama, catch a glimpse of a maiko in Gion, and let a Zen garden reset your soul.</p>
+
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Higashiyama & Gion</h3>
+    <p class="neighborhood-desc">The postcard side of Kyoto. Stone-paved lanes, wooden machiya townhouses, and geisha sightings at twilight.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoew7utY0wgqVx-tsZFyAqlDJulEZ6gwTyIIz8_E8hD04ysTPvEQQVtunE1r31v2VIA_uBD_1qON14qHsc11HBX7u8UXZTz70_RnS_HaEpNGQp1Jmc-653NGVFbmHp7uBEh8iSVd6-g_WQ=w400-h300-k-no" alt="Kiyomizu-dera" onerror="this.parentElement.innerHTML='<div class=fallback>⛩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Kiyomizu-dera%2C%20Kyoto" target="_blank">Kiyomizu-dera</a></div>
+          <p class="place-desc">One of Kyoto's most celebrated temples, perched on a hillside with a massive wooden stage over a valley of cherry and maple trees. Breathtaking in any season, magical during night illuminations.</p>
+          <div class="place-meta"><span class="place-tag">Temple</span><span class="place-tag">Higashiyama</span><a class="place-link" href="https://www.google.com/maps/search/Kiyomizu-dera%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweomkYgtipJO4811rqzEDBp9PdMwEOXS262JX9ifshHO7l8TmsYIRED1IFyBjKX9fYJNFldjQhT-VV6FuEXWYxNXmQV1Msrq7zthyIbOkYZrLDyUGKf3IUkPmPxs1Y3-Xk_Ph5bJ6woTCwJj=w400-h300-k-no" alt="Ninenzaka" onerror="this.parentElement.innerHTML='<div class=fallback>🏯</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Ninenzaka%20walkway%2C%20Kyoto" target="_blank">Ninenzaka</a></div>
+          <p class="place-desc">Preserved stone-paved slope to Kiyomizu-dera, lined with traditional shops and tea houses. Come at dawn to avoid crowds and capture the perfect photo.</p>
+          <div class="place-meta"><span class="place-tag">Historic Street</span><span class="place-tag">Higashiyama</span><a class="place-link" href="https://www.google.com/maps/search/Ninenzaka%20walkway%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepG7-phHoHuMtV5zpK9v11D_hQN4d3NW1E9iiB8XkqRn4CjJ7vWsZu2OpYngFTH2Wj-JlCRZ2GFXcdrjL2f7TEUlbMoFSYvor85Pbm2Jp4SIGQPTDnwec4SuW_Q8oMtswiVmVii=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>⛩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Yasaka%20Shrine%2C%20Kyoto" target="_blank">Yasaka Shrine</a></div>
+          <p class="place-desc">Ancient shrine at the end of Shijo Street, gateway to Maruyama Park. The vermillion gate is a Gion landmark.</p>
+          <div class="place-meta"><span class="place-tag">Shrine</span><span class="place-tag">Gion</span><a class="place-link" href="https://www.google.com/maps/search/Yasaka%20Shrine%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoq-NRTJDCHWYaNoOyG8LDQIuDmqaZkKEHboYW9sTn0rYNlf4N6QkVhCGNjwQZXxlo78AN_uXtT3w9LMa01PSNMfHJH2BfR6mmFB-tSKT-cZZoFNu8_0pkxhv9R0Q1NJFPRcGCl1Q=w400-h300-k-no" alt="Cherry blossoms" onerror="this.parentElement.innerHTML='<div class=fallback>🌸</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Maruyama%20Park%2C%20Kyoto" target="_blank">Maruyama Park</a></div>
+          <p class="place-desc">Kyoto's most popular cherry blossom spot, centered around a weeping cherry tree illuminated at night during sakura season.</p>
+          <div class="place-meta"><span class="place-tag">Park</span><span class="place-tag">Gion</span><a class="place-link" href="https://www.google.com/maps/search/Maruyama%20Park%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><div class="fallback">🌿</div></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Shirakawa%20Canal%2C%20Kyoto" target="_blank">Shirakawa Canal</a></div>
+          <p class="place-desc">Narrow canal lined with willows running through Gion. One of Kyoto's most photogenic walks, especially beautiful in evening light.</p>
+          <div class="place-meta"><span class="place-tag">Scenic Walk</span><span class="place-tag">Gion</span><a class="place-link" href="https://www.google.com/maps/search/Shirakawa%20Canal%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+        </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><div class="fallback">🏮</div></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/35.002536,135.77485" target="_blank">Hanami-koji Street</a></div>
+          <p class="place-desc">Main street of Gion's geisha district. Traditional teahouses and high-end kaiseki restaurants line this lantern-lit lane. Best at dusk.</p>
+          <div class="place-meta"><span class="place-tag">Historic Street</span><span class="place-tag">Gion</span><a class="place-link" href="https://www.google.com/maps/search/35.002536,135.77485" target="_blank">📍 Maps</a></div>
+        </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerjUdAtSdwvNf0lsaqf_kfcXIIYiUfDOG-Y5f36Z6k3MPN7Y19GZFeHzgcvZKrGeMmkRS-3LGcLnvKYQZyDgIhrqxUs6LF4d9BiS4Pxv8UOnR-uZEmTvDXdoF-ev82tcBcO6PaQEw=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🐉</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Kenninji%20Temple%2C%20Kyoto" target="_blank">Kenninji Temple</a></div>
+          <p class="place-desc">Kyoto's oldest Zen temple (1202). Home to the famous "Twin Dragons" ceiling painting and beautiful rock gardens. Rarely crowded despite its central location.</p>
+          <div class="place-meta"><span class="place-tag">Zen Temple</span><span class="place-tag">Gion</span><a class="place-link" href="https://www.google.com/maps/search/Kenninji%20Temple%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipOWAg4GmzLfUFl0jfAok8ymfaX3AyyR2vu-0Bdb=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🎩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/L'Escamoteur%2C%20Kyoto" target="_blank">L'Escamoteur</a></div>
+          <p class="place-desc">Magical speakeasy hidden in Gion. The bartender performs sleight-of-hand magic while crafting exceptional drinks — an unforgettable evening.</p>
+          <div class="place-meta"><span class="place-tag">Cocktail Bar / Magic</span><span class="place-tag">Gion</span><a class="place-link" href="https://www.google.com/maps/search/L'Escamoteur%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/p/AF1QipOPax5Nxp59xvVtwQZNj7JtXrIuCCEMZnpPXysO=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🥚</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Ninuki%20Kyoto%20egg%20sandwich%2C%20Kyoto" target="_blank">Ninuki Kyoto — Egg Sandwich</a></div>
+          <p class="place-desc">Famous for their fluffy, thick tamago sando (egg sandwich). A simple but sublime Kyoto street food experience.</p>
+          <div class="place-meta"><span class="place-tag">Cafe</span><span class="place-tag">Central Kyoto</span><a class="place-link" href="https://www.google.com/maps/search/Ninuki%20Kyoto%20egg%20sandwich%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Arashiyama</h3>
+    <p class="neighborhood-desc">Kyoto's western mountains. Bamboo groves, river cruises, and monkey parks — a world apart from the city center.</p>
+    <div class="collapsible-content">
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqek2zWuoUKsj3y3RVriq4u3XYEfaak7VszJmzDuxLhuImf7w_krVKf80CZL3ko46YlNQmEPW30N4aDc9du4zGlDV53i-UbeV2nx_5pkx_pG6B26Hai9lf6Qa_No507E8fE0ew5zw=w400-h300-k-no" alt="Bamboo forest" onerror="this.parentElement.innerHTML='<div class=fallback>🎋</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Arashiyama%20Bamboo%20Forest%2C%20Kyoto" target="_blank">Arashiyama Bamboo Forest</a></div>
+          <p class="place-desc">Towering bamboo stalks that creak and sway overhead. Go at dawn (before 7am) for near-solitude — the sound of wind through bamboo is otherworldly.</p>
+          <div class="place-meta"><span class="place-tag">Nature Walk</span><span class="place-tag">Arashiyama</span><a class="place-link" href="https://www.google.com/maps/search/Arashiyama%20Bamboo%20Forest%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoYxVMttNLvKRKwmigb-0OGimktEQUsYKiWC2xeD4KZXM3ec7pCXFDGdOUh4n2aNvujzOvDOk_r_UgeyImFiDK6R6PDeS4KPXxG19rF7wsLK2tuk7PHgjB6swOyt7jpLdYicfCi=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍵</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Okochi%20Sanso%20Gorge%20Observation%20Deck%2C%20Kyoto" target="_blank">Okochi Sanso Garden</a></div>
+          <p class="place-desc">Former actor's villa with exquisite gardens and river gorge views. Entry includes matcha and sweets. One of Arashiyama's hidden highlights.</p>
+          <div class="place-meta"><span class="place-tag">Garden</span><span class="place-tag">Arashiyama</span><a class="place-link" href="https://www.google.com/maps/search/Okochi%20Sanso%20Gorge%20Observation%20Deck%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqOPELRdlUGWNOGQiaag0HAbD1XFPczlfxFUX0axVl8Oien4K6U7S3vhoa7gzSAf-PdibYIBOEfcF-NINam6J1v3vErlt9ppdb_OGctxf4FtatYrUGa7njbPMSzB7kpaF_uWNHF=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🌉</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Nakanoshima%20Bridge%2C%20Kyoto" target="_blank">Nakanoshima Bridge</a></div>
+          <p class="place-desc">Scenic bridge crossing the Katsura River. A peaceful spot to watch the mountains and catch cormorant fishing in season.</p>
+          <div class="place-meta"><span class="place-tag">Scenic Spot</span><span class="place-tag">Arashiyama</span><a class="place-link" href="https://www.google.com/maps/search/Nakanoshima%20Bridge%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Beyond Kyoto City</h3>
+    <div class="collapsible-content">
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoM5pxXwjf8aA3Vbxjea7TxlfAZ5UL-8JcQz3c5HIYOUtIClVVOL_aGbQFN8i_xQW3MRqrzdPz9Pzh_urLTl49YCw13Z2QBptCKZZUGuQtRejSsXr8oQNp4gccTAcab5Hc8WfjsZw=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🌊</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Amanohashidate%20Viewland%2C%20Miyazu%2C%20Kyoto" target="_blank">Amanohashidate Viewland</a></div>
+          <p class="place-desc">One of Japan's "Three Scenic Views" — a 3.6km sand bar covered in pines stretching across Miyazu Bay. Tradition: view it upside down through your legs, where it becomes a bridge to heaven. 2 hours north of Kyoto.</p>
+          <div class="place-meta"><span class="place-tag">Scenic Viewpoint</span><span class="place-tag">Miyazu</span><a class="place-link" href="https://www.google.com/maps/search/Amanohashidate%20Viewland%2C%20Miyazu%2C%20Kyoto" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MT FUJI ==================== -->
+<div class="region" id="fuji">
+  <div class="region-hero">
+    <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=960&q=70" alt="Mt Fuji" onerror="this.parentElement.style.display='none'">
+    <div class="region-hero-overlay"><h2>🗻 Mt Fuji Area</h2></div>
+  </div>
+  <p class="region-summary">Japan's sacred icon. On a clear day, Fuji floats above the Five Lakes like a painting. The surrounding lakes and highland forests make for perfect day trips from Tokyo (1.5-2 hours by bus).</p>
+
+  <div class="neighborhood">
+    <h3 class="neighborhood-header">Fuji Five Lakes</h3>
+    <div class="collapsible-content">
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqwVNdR9Y0uS2cm7Op9rJdOCVex4L9nQV236pTwd-ltJAYn1jnw7MIX7YxXJA6RXUUzNcWk6smj2BWusDxYL7qd7muBjdtg-QMxo5vsVe0KAdeb7EuR_nGmdvmMNCcMGDAXRvMMUCy-cIQ=w400-h300-k-no" alt="Lake Shoji" onerror="this.parentElement.innerHTML='<div class=fallback>🏔</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Lake%20Sh%C5%8Dji%2C%20Fujikawaguchiko" target="_blank">Lake Shoji</a></div>
+          <p class="place-desc">Smallest and least developed of the Fuji Five Lakes. Crystal-clear water reflecting Mt Fuji with far fewer tourists than Kawaguchiko. A peaceful place to sit with the mountain.</p>
+          <div class="place-meta"><span class="place-tag">Lake</span><span class="place-tag">Fujikawaguchiko</span><a class="place-link" href="https://www.google.com/maps/search/Lake%20Sh%C5%8Dji%2C%20Fujikawaguchiko" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BEYOND ==================== -->
+<div class="region" id="beyond">
+  <div class="region-hero">
+    <img src="https://images.unsplash.com/photo-1542640244-7e672d6cef4e?w=960&q=70" alt="Japanese countryside" onerror="this.parentElement.style.display='none'">
+    <div class="region-hero-overlay"><h2>🌊 Beyond — Other Japan</h2></div>
+  </div>
+  <p class="region-summary">From Okinawa's tropical shores to mountain hot springs, these spots span the breadth of Japan. Each worth a detour for a deeper look beyond the Tokyo-Kyoto corridor.</p>
+
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Hot Springs & Nature</h3>
+    <div class="collapsible-content">
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepXVSlKFiTcHwauJfEKodKRhnqNRaF7Ukal_jIzCTaEPdl6bYfb8prTkNdWA7b6K6NNRW06KBNNfN0wVqnl9vTLAnys_A0ZOUWnDTJALKYgJZr4QySWhGH3VDaE3UVVv-dWkeVK=w400-h300-k-no" alt="Onsen" onerror="this.parentElement.innerHTML='<div class=fallback>♨️</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Kusatsu%20Onsen%2C%20Kusatsu%2C%20Gunma%20Prefecture" target="_blank">Kusatsu Onsen</a></div>
+          <p class="place-desc">One of Japan's top three onsen towns. Naturally acidic hot springs and the famous "yubatake" — steaming wooden channels where water cools before reaching the baths. ~3 hours from Tokyo.</p>
+          <div class="place-meta"><span class="place-tag">Hot Springs</span><span class="place-tag">Gunma</span><a class="place-link" href="https://www.google.com/maps/search/Kusatsu%20Onsen%2C%20Kusatsu%2C%20Gunma%20Prefecture" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepV421KZNdk83V6RoXztPLGfF4jkfi9AyNeORSR73tTLUS7A4u2x8kGy7oI2xGTIF-JxfYs1RiA74ZHBPtjnhIwlKnMAwO3YYOMxOAbT9E9q1u2d9h3ZVJLTC4vNnEJjb31W1zGdA=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🎢</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Nagashima%20Spa%20Land%2C%20Kuwana%2C%20Mie%20Prefecture" target="_blank">Nagashima Spa Land</a></div>
+          <p class="place-desc">Japan's largest theme park — world-class roller coasters, hot spring baths, and a massive outlet mall. A full day of thrills near Nagoya.</p>
+          <div class="place-meta"><span class="place-tag">Theme Park</span><span class="place-tag">Mie</span><a class="place-link" href="https://www.google.com/maps/search/Nagashima%20Spa%20Land%2C%20Kuwana%2C%20Mie%20Prefecture" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="outdoors">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwer9_9vidmkiKONGq7v3BRQsJxuCrRzKvxJ976WFIs6e7CsvADAag5phpFDKtQZV7kx6MqX1uCwdVzoY7jBSOC0CiBavvn36bm9RdU5AjSZuoCq0-H6oo5QHRoOlvQi0FtKcVadaRg=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🏖</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Shima%2C%20Mie%20Prefecture" target="_blank">Shima</a></div>
+          <p class="place-desc">Coastal city home to Ise-Shima National Park. Famous for ama pearl divers, rugged coastline, and the sacred Ise Grand Shrine nearby.</p>
+          <div class="place-meta"><span class="place-tag">Coastal Town</span><span class="place-tag">Mie</span><a class="place-link" href="https://www.google.com/maps/search/Shima%2C%20Mie%20Prefecture" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Okinawa</h3>
+    <p class="neighborhood-desc">Japan's tropical south — turquoise waters, coral reefs, and a distinct Ryukyuan culture.</p>
+    <div class="collapsible-content">
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoCYZcHVCNKi5wq3HppjFvPGGYttnpt_saWc8Y1w-XQnLn3-7ePg2UTVN_Hh-EtZ4S5ZYM-ZzAlLvUwZpvQUBsMG3x1Qwps2YNNtrXNducd257wuEXCeELqV7-NZsQUKjv_5B8KH8ThWjh7=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🍻</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Izakaya%20Momiji%20Sakaba%2C%20Kitanakagusuku%2C%20Okinawa" target="_blank">Izakaya Momiji Sakaba</a></div>
+          <p class="place-desc">Cozy Okinawan izakaya — goya champuru, rafute braised pork, and awamori cocktails in a laid-back tropical atmosphere.</p>
+          <div class="place-meta"><span class="place-tag">Izakaya</span><span class="place-tag">Okinawa</span><a class="place-link" href="https://www.google.com/maps/search/Izakaya%20Momiji%20Sakaba%2C%20Kitanakagusuku%2C%20Okinawa" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+
+      <div class="place" data-cat="food">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo65iUFWYi8BafCbREMXmabOQ9r0PquEqkBotDXzKCcjPJZPVYWTF9zu-JBdK5sPX1ixAhPiponNKtPVg-8eiwaZdinPEUmYNnzPKazhRj6iJrEHY51HuB7EHjXeQOQA6s5nJc5=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>🥩</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Hana%20Japan%20Steak%20and%20Seafood%2C%20Onna%2C%20Okinawa" target="_blank">Hana Japan Steak and Seafood</a></div>
+          <p class="place-desc">Teppanyaki restaurant in the resort area of Onna Village, overlooking the beautiful Okinawan coast.</p>
+          <div class="place-meta"><span class="place-tag">Teppanyaki</span><span class="place-tag">Onna Village</span><a class="place-link" href="https://www.google.com/maps/search/Hana%20Japan%20Steak%20and%20Seafood%2C%20Onna%2C%20Okinawa" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="neighborhood">
+    <h3 class="neighborhood-header" onclick="toggleSection(this)">Other Regions</h3>
+    <div class="collapsible-content">
+      <div class="place" data-cat="culture">
+        <div class="place-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepO2R_-q_hxCD3DqiL8dXtJnxov6LxUshj4Au93qRGXe8FCgBmJxnfeNd_tb2VGdPMRtiy1SdvK6l7QFnYDjfl1PVXE-zDwMLlHx19F6MfXtA7h4OA9IJQfyBlU6Cb-yXKZBYwd=w400-h300-k-no" alt="Place photo" onerror="this.parentElement.innerHTML='<div class=fallback>✈️</div>'"></div>
+        <div class="place-body">
+          <div class="place-name"><a href="https://www.google.com/maps/search/Kansai%2C%20Izumisano%2C%20Osaka%20Prefecture" target="_blank">Kansai International Airport</a></div>
+          <p class="place-desc">Renzo Piano's architectural marvel on a man-made island. The gateway to Kyoto, Osaka, and Nara.</p>
+          <div class="place-meta"><span class="place-tag">Airport</span><span class="place-tag">Osaka</span><a class="place-link" href="https://www.google.com/maps/search/Kansai%2C%20Izumisano%2C%20Osaka%20Prefecture" target="_blank">📍 Maps</a></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  Made with love by Sam &nbsp;🗾&nbsp; 73 places across Japan &nbsp;•&nbsp; <a href="https://www.google.com/maps" target="_blank" style="color:var(--accent)">Google Maps</a>
+</div>
+
+<script>
+function toggleSection(el) {
+  el.classList.toggle('collapsed');
+  let content = el.nextElementSibling;
+  while (content && !content.classList.contains('collapsible-content')) content = content.nextElementSibling;
+  if (content) content.classList.toggle('collapsed');
+}
+
+function filterPlaces(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.place').forEach(p => {
+    const cat = p.dataset.cat || '';
+    p.style.display = (type === 'all' || cat === type) ? '' : 'none';
+  });
+}
+
+function navClick(el) {
+  document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  const target = document.querySelector(el.getAttribute('href'));
+  if (target) { event.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+}
+
+// Highlight nav on scroll
+const sections = document.querySelectorAll('.region');
+const navLinks = document.querySelectorAll('.nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
